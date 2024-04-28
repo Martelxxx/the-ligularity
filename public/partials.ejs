@@ -1,0 +1,10 @@
+<!-- views/partials/dropdown.ejs -->
+
+<select id="context-dropdown">
+    <option value="">Select a Context</option>
+    <% purpose.forEach(item => { %>
+        <option value="<%= item.context %>"><%= item.context %></option>
+    <% }); %>
+</select>
+
+<textarea id="purpose-textarea"></textarea>

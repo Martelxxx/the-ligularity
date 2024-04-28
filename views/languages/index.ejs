@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Index</title>
+    </head>
+
+    <nav>
+        <a href="/">Home</a>
+        <br>
+        <a href="/languages/index">Languages</a>
+        <br>
+        <a href="/languages/new">Create a new language</a>
+    </nav>
+
+    <!-- CSS Styling for Each new language to be in it's own grid -->
+<style>
+/* Evenly Spaced Horizontal Nav Bar in Flex  */
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+    /* Define the grid container for each language */
+.language-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* One column */
+    gap: 10px; /* Space between grid items */
+    padding: 10px; /* Padding around each grid */
+    border: 1px solid #ccc; /* Border around each grid */
+    border-radius: 5px; /* Rounded corners */
+    background-color: white; /* Background color */
+}
+
+/* Style for the language heading */
+.language-heading {
+    font-size: 1.5em; /* Larger font size */
+    color: #333; /* Dark text color */
+    text-align: center; /* Centered text */
+}
+
+/* Style for the language attributes */
+.language-attributes {
+    font-size: 1em; /* Normal font size */
+    color: #555; /* Slightly lighter text color */
+    line-height: 1.5; /* Space between lines */
+}
+
+</style>
+    
+
+    <head>
+        <title>Languages Created</title>
+    </head>
+    <body>
+        <h1>Every Language Ever Created!</h1>
+    
+        <% if (languages.length > 0) { %>
+            <!-- Iterate over each language and create a grid for each -->
+            <% languages.forEach(language => { %>
+                <div class="language-grid"> <!-- Container for each language grid -->
+                    <!-- Language name as the heading -->
+                    <div class="language-heading"><%= language.name %></div>
+    
+                    <!-- Display the attributes of the language -->
+                    <div class="language-attributes">
+                        <strong>Agent:</strong> <%= language.agent %><br>
+                        <strong>Purpose:</strong> <%= language.purpose %><br>
+                        <strong>Context:</strong> <%= language.context %><br>
+                        <strong>Consonant:</strong> <%= language.consonant %><br>
+                        <strong>Vowel:</strong> <%= language.vowel %><br>
+                        <strong>Grammar:</strong> <%= language.grammar %><br>
+                    </div>
+                </div>
+                <br>
+            <% }); %>
+        <% } else { %>
+            <p>No languages created yet.</p>
+        <% } %>
+    </body>
+    </html>
