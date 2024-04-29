@@ -17,11 +17,15 @@ body, select {
 }
 
 nav {
+    position: relative;
     grid-column: 1 / -1; /* Spans across all columns */
     background-color: #f0f0f0; /* Light background */
     padding: 10px; /* Padding for the nav bar */
     display: flex; /* Flex layout */
-    justify-content: space-between /* Evenly spaced items */
+    justify-content: space-between; /* Evenly spaced items */
+    border: 10px solid transparent; /* Create a border with the same width as the image border */
+    border-image: url('/assets/rb.png') 30 round; /* Replace with your image path */
+    border-image-width: 7px;
 }
   /* Main grid layout with three equal columns */
 
