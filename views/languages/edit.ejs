@@ -17,10 +17,6 @@
     <a href="/languages/new">Create a new language</a>
 </nav>
 
-.submit-button {
-    width: 15px;
-}
-
 <style>
 
     body, select, button {
@@ -35,6 +31,10 @@ nav {
     justify-content: space-between /* Evenly spaced items */
 }
 
+h1 {
+    background-image: url('/assets/lang4.png'); /* Background image */
+    text-align: center;
+}
 
 form {
     display: grid;
@@ -47,7 +47,9 @@ form {
 
 </style>
 <body>
-    Edit PAge
+    
+    <h1>`</h1>
+    <h2>Edit Page</h2>
     
     <form action="/languages/<%=language.name%>?_method=PUT" method="POST">
 
