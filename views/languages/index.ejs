@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Language Index</title>
+    <link rel="stylesheet" href="public/assets">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
     </head>
 
     <nav>
@@ -16,12 +20,32 @@
 
     <!-- CSS Styling for Each new language to be in it's own grid -->
 <style>
+
+    body, select, button {
+    font-family: 'gloria hallelujah', cursive;
+}
 /* Evenly Spaced Horizontal Nav Bar in Flex  */
 nav {
-    display: flex;
-    justify-content: space-evenly;
-    background-color: #f0f0f0;
-    padding: 10px;
+    grid-column: 1 / -1; /* Spans across all columns */
+    background-color: #f0f0f0; /* Light background */
+    padding: 10px; /* Padding for the nav bar */
+    display: flex; /* Flex layout */
+    justify-content: space-between; /* Evenly spaced items */
+}
+
+h1 {
+    text-align: center;
+    background-image: url('/assets/lang2.png'); /* Background image */
+    background-position: center;
+    background-size: cover;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
 }
     /* Define the grid container for each language */
 .language-grid {
@@ -31,7 +55,7 @@ nav {
     padding: 10px; /* Padding around each grid */
     border: 1px solid #ccc; /* Border around each grid */
     border-radius: 5px; /* Rounded corners */
-    background-color: white; /* Background color */
+    background-position: center;
 }
 
 /* Style for the language heading */
@@ -48,6 +72,26 @@ nav {
     line-height: 1.5; /* Space between lines */
 }
 
+button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    margin: 10px; /* Margin around button */
+}
+
+.editbutton {
+    background-color: #008CBA; /* Blue background */
+    width: 190px;
+    padding: 10px 20px; /* Padding around text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    margin: 10px; /* Margin around button */
+}
+
 </style>
     
 
@@ -55,7 +99,9 @@ nav {
         <title>Languages Created</title>
     </head>
     <body>
-        <h1>Every Language Ever Created!</h1>
+        <h1>!</h1>
+        <h2>Every Language Ever Created</h2>
+        <h3>Click on a language to learn more about it!</h3>
     
         <% if (languages.length > 0) { %>
             <!-- Iterate over each language and create a grid for each -->
@@ -73,7 +119,10 @@ nav {
                         <strong>Vowel:</strong> <%= language.vowel %><br>
                         <strong>Grammar:</strong> <%= language.grammar %><br>
                     </div>
-                </div>
+                    <form action="/languages/<%=language.name%>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this language?');">
+                        <button>Delete <%= language.name %></button>
+                    </form>
+                    <button class="editbutton"><a href="/languages/<%=language.name%>/edit">Edit <%= language.name %></a></button>                </div>
                 <br>
             <% }); %>
         <% } else { %>

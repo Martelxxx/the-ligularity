@@ -3,28 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/assets">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    
     <title>The Ligularity</title>
 </head>
 <style>
-    /* Evenly Spaced Horizontal Nav Bar in Flex  */
-    nav {
-        display: flex;
-        justify-content: space-evenly;
-        background-color: #f0f0f0;
-        padding: 10px;
-    }
-</style>
+
+body, select {
+    font-family: 'gloria hallelujah', cursive;
+}
+
+nav {
+    grid-column: 1 / -1; /* Spans across all columns */
+    background-color: #f0f0f0; /* Light background */
+    padding: 10px; /* Padding for the nav bar */
+    display: flex; /* Flex layout */
+    justify-content: space-between /* Evenly spaced items */
+}
+  /* Main grid layout with three equal columns */
+
+  header {
+    text-align: center;
+}
+
+.centered-grid {
+    font-family: 'Gloria Hallelujah', cursive;
+    display: grid; /* Use CSS Grid */
+    grid-template-columns: repeat(3, 1fr); /* Create three equal columns */
+    gap: 20px; /* Space between the columns */
+    padding: 20px; /* Padding around the grid */
+    background-image: url('/assets/lang.png');
+}
+
+.grid-container > div {
+    aspect-ratio: 1 / 1; /* Make the grid items squares */
+}
+
+        /* Common styling for all text boxes */
+.text-box {
+    border: 1px solid #ccc; /* Border around the box */
+    border-radius: 5px; /* Rounded corners */
+    padding: 20px; /* Padding inside the box */
+    background-color: #fff; /* White background */
+    text-align: center; /* Center the text */
+}
+    </style>
 
 <nav>
-    <a href="/">Home</a>
-    <br>
-    <a href="/languages/index">Languages</a>
-    <br>
-    <a href="/languages/new">Create a new language</a>
+
+        <a href="/">Home</a>
+        <br>
+        <a href="/languages/index">Languages</a>
+        <br>
+        <a href="/languages/new">Create a new language</a>
+    
 </nav>
 
-<body>
-    <h1>Welcome to The Ligularity</h1>
-    <p>An app that lets you build new languages from scratch!</p>
+<header>
+
+    <h1>Welcome to The Ligularity</h1> <!-- Main welcome message -->
+
+</header>
+<body class="homepage">
+
+    <!-- Grid container with three equal-sized text boxes -->
+    <div class="centered-grid">
+        <!-- First text box with an introduction -->
+        <div class="text-box">
+            <h2>About The Ligularity</h2>
+            <p>This app allows you to create new languages from scratch. Build your own vocabulary, grammar, phonetics, and more!</p>
+        </div>
+
+        <!-- Second text box with key features -->
+        <div class="text-box">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Create custom vocabulary lists</li>
+                <li>Design unique grammar structures</li>
+                <li>Experiment with different phonetic systems</li>
+                <li>Share your creations with others</li>
+            </ul>
+        </div>
+
+        <!-- Third text box inviting users to get started -->
+        <div class="text-box">
+            <h2>Get Started</h2>
+            <p>Ready to create your own language? Click <a href="/languages/new">here</a> to begin building your unique language!</p>
+        </div>
+    </div>
 </body>
 </html>

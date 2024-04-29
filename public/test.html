@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="agent-description">Loading...</p>
+    <script>
+        // Function to retrieve and display data from the server
+        function displayAgentDescription() {
+        const selectedAgent = localStorage.getItem('selectedAgent');
+        const displayArea = document.getElementById('agent-description');
+        displayArea.textContent = selectedAgent ? selectedAgent : 'No agent found';
+    }
+    
+        // Call the function on page load
+        document.addEventListener('DOMContentLoaded', displayAgentDescription);
+
+    </script>
+    </body>
+        
+        </html>
