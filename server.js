@@ -45,7 +45,8 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/languages/new', async (req, res) => {
-    res.render('languages/new.ejs', { agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar });
+    const languages = await Language.find();
+    res.render('languages/new.ejs', { agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar, languages: languages});
 });
 
 app.post('/languages', async (req, res) => {
@@ -56,6 +57,7 @@ app.post('/languages', async (req, res) => {
 
 app.get('/languages/index', async (req, res) => {
     const languages = await Language.find();
+
     res.render('languages/index.ejs', { languages });
 });
 
@@ -70,6 +72,12 @@ app.get('/languages/:languageName/edit', async (req, res) => {
     const foundLanguage = await Language.findOne({ name: languageName });
     res.render("languages/edit.ejs", { language: foundLanguage, agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar });
 });   
+
+app.get('/languages/:languageName/translator', async (req, res) => {
+    const languageName = req.params.languageName;
+    const foundLanguage = await Language.findOne({ name: languageName });
+    res.render("languages/translator.ejs", { name: languageName });
+});
 
 app.put('/languages/:languageName', async (req, res) => {
     const languageName = req.params.languageName;
@@ -104,6 +112,6 @@ app.get('/api/grammar', (req, res) => {
 });
 
 
-app.listen(3115, () => {
+app.listen(3226, () => {
   console.log('server 3032 started');
 });

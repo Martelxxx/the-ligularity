@@ -54,6 +54,11 @@ label {
     background-color: white;
 }
 
+#translate, #translation {
+    height: 90px;
+    width: 555px;
+}
+
 /* Grid container */
 .main-grid {
     display: grid;
@@ -98,6 +103,16 @@ label {
     /* Other styles... */
 }
 
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
     </style>
 </head>
 <body>
@@ -110,7 +125,7 @@ label {
 
     <form action="/languages" method="POST" onsubmit="return confirmSubmit()">
         <label for="name">Name of New Language:</label>
-        <input type="text" name="name" required />
+        <input type="text" id=name name="name" required />
     
         <!-- Agent Selection -->
         <label for="agent">Agent:</label>
@@ -280,8 +295,24 @@ label {
 
         <div class="top-middle"> <!-- Top middle grid -->
             <!-- Content for top middle grid -->
-            <p>Upgrade for full content!</p>
-        </div>
+            <p>Translator</p>
+            <form action="/languages" method="POST">
+            <p>Translate from:
+            <select id="languages">
+                    <% languages.forEach(function(language) { %>
+                        <option value="<%= language.name %>"><%= language.name %></option>
+                    <% }); %>
+                </select>
+                to English:</p>
+                <hr>
+                <textarea type="text" id="translate" placeholder="Enter text to translate"></textarea>
+                <button id="translate-btn">Translate</button>
+            <hr>
+            <p>Translation:</p>
+            <hr>
+            <textarea id="translation" placeholder="Translation will appear here" readonly></textarea>
+            </form>
+            </div>
 
         <div class="bottom-middle"> <!-- Bottom middle grid -->
             <!-- Content for bottom middle grid -->
@@ -295,4 +326,7 @@ label {
         </div>
     </div>
 </body>
+<footer>
+    © 2024 The Lingularity from Martelligence. All rights reserved.
+</footer>
 </html>
