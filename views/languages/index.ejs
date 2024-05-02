@@ -37,6 +37,17 @@ nav {
     border-image-width: 7px; 
 }
 
+#searchInput {
+    font-family: 'gloria hallelujah', cursive;
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid yellow;
+    border-radius: 4px;
+
+}
+
 
 h1 {
     text-align: center;
@@ -131,8 +142,28 @@ footer {
         <title>Languages Created</title>
     </head>
     <body>
-        <h1>`</h1>
-        <h2>Every Language Ever Created</h2>
+        <h1><input type="search" id="searchInput" placeholder="Search for a language..." onkeyup="searchFunction()">
+
+            <script>
+            function searchFunction() {
+                let input = document.getElementById('searchInput');
+                let filter = input.value.toUpperCase();
+                let grids = document.getElementsByClassName('language-grid');
+            
+                for (let i = 0; i < grids.length; i++) {
+                    let heading = grids[i].getElementsByClassName('language-heading')[0];
+                    if (heading) {
+                        let textValue = heading.textContent || heading.innerText;
+                        if (textValue.toUpperCase().indexOf(filter) > -1) {
+                            grids[i].style.display = "";
+                        } else {
+                            grids[i].style.display = "none";
+                        }
+                    }       
+                }
+            }
+            </script></h1>
+<h2>All <%= languages.length %> languages ever created, right here!</h2>
         <h3>Modify or Remove languages from here!</h3>
     
         <% if (languages.length > 0) { %>
@@ -158,7 +189,7 @@ footer {
                     </form>
                     <button class="editbutton"><a href="/languages/<%=language.name%>/edit">Edit <%= language.name %></a></button>                
                 <button class="translate"><a href="/languages/<%=language.name%>/translator">Translate <%= language.name %></a></button>
-                
+             </div>   
             </div>
                 <% }); %>
         <% } else { %>

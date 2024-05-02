@@ -20,7 +20,7 @@
     font-family: 'gloria hallelujah', cursive;
     color: #333;
     margin: 0;
-    padding: 0;
+    padding: 10px;
 }
 
 .logo {
@@ -147,8 +147,22 @@ nav {
         <button id="translate-button">Translate</button>
 </form>
         <textarea id="output-text" placeholder="Translation..." readonly><%= lastResponse %></textarea>
+        <button onclick="goBack()">Go Back</button>
 
-      
+        <script>
+        function goBack() {
+    if (document.referrer) {
+        // If the referring URL is known, navigate back to it
+        window.location.href = document.referrer;
+    } else {
+        // If the referring URL is not known, just navigate back
+        window.history.back();
+    }
+}
+document.getElementById('lastResponse').textContent = localStorage.getItem('lastResponse');
+
+        </script>
+      <p>  <%= lastResponse %></p>
 
 
     <footer>

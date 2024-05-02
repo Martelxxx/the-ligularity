@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
     <script defer src="server.js"></script> 
     <title>Translator Page</title>
     </head>
@@ -67,6 +70,12 @@
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     font-size: 16px;
+}
+
+#confirm {
+    font-family: 'libre barcode 39', cursive;
+    width: 80%;
+    margin: 10px 0;
 }
 
 #translate-button {
@@ -148,11 +157,31 @@ nav {
 
 <body>
 
-    <h2>English to </h2>
+    <h2>Click the button below to copy the <%= language.name %> code.</h2>
+
+    <button onclick="copyText()">Copy Text</button>
+
+<script>
+function copyText() {
+    /* Get the text field */
+    var copyText = document.getElementById("confirm");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+
+    /* Alert the copied text */
+    alert("Copied the text: ");
+}
+</script>
+
     <form action="/memory" method="POST">
-        <textarea rows="6" id="input-text" name="id" id="confirm" placeholder="Enter text..."> 
+        <textarea rows="6" name="user" id="confirm" placeholder="Enter text..."> 
         
-        Create a language called <%= language.name %> using <%= language.agent %> as my agent. The language will be used for <%= language.purpose %> about a(n) <%= language.context %>. It will use  <%= language.consonant %> consonants and <%= language.vowel %> vowels based on <%= language.grammar %>
+        Create a language called <%= language.name %> using <%= language.agent %> as my agent. The language will be used for a <%= language.purpose %> project about a(n) <%= language.context %>. It will use  <%= language.consonant %> consonants and <%= language.vowel %> vowels based on <%= language.grammar %>.
         
     </textarea>
     <button id="translate-button">Confirm</button>

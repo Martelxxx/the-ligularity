@@ -17,7 +17,7 @@ const LocalStorage = require('node-localstorage').LocalStorage;
 const localStorage = new LocalStorage('./scratch');
 
 
-const methodOverride = require('method-override');
+const methodOverride = require('method-override'); 
 
 const morgan = require('morgan');
 
@@ -56,6 +56,7 @@ app.get('/', async (req, res) => {
 
 app.get('/languages/new', async (req, res) => {
     const languages = await Language.find();
+    
     res.render('languages/new.ejs', { agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar, languages: languages});
 });
 
@@ -68,13 +69,13 @@ app.post('/languages', async (req, res) => {
     const languages = await Language.create(req.body);
     res.render('languages/confirmation.ejs', { 
         language: languages });
-});
+}); 
 
-app.post('/memory', (req, res) => {
-    memory.push(req.body);
-    localStorage.setItem('memory', JSON.stringify(memory));
-    res.redirect('/');
-})
+// app.post('/memory', (req, res) => {
+//     memory.push(req.body);
+//     localStorage.setItem('memory', JSON.stringify(memory));
+//     res.redirect('/');
+// })
 
 app.get('/languages/index', async (req, res) => {
     const languages = await Language.find();
@@ -97,7 +98,11 @@ app.get('/languages/:languageName/edit', async (req, res) => {
 app.get('/languages/:languageName/translator', async (req, res) => {
     const languageName = req.params.languageName;
     const foundLanguage = await Language.findOne({ name: languageName });
-    res.render("languages/translator.ejs", { name: languageName });
+    const userMessage = req.body.englishTo;
+    const response = await getResponse('');
+
+    
+    res.render("languages/translator.ejs", {lastResponse: response.choices[0].message.content, name: languageName});
 });
 
 app.put('/languages/:languageName', async (req, res) => {
@@ -143,7 +148,11 @@ app.post('/languages/:languageName/translator', async (req, res) => {
     const languageName = req.params.languageName;
     const userMessage = req.body.englishTo;
     const response = await getResponse(userMessage);
-    res.render('languages/complete.ejs', {lastResponse: response.choices[0].message.content, name: languageName}); 
+    res.render('languages/translator.ejs', {lastResponse: response.choices[0].message.content, name: languageName}); 
+});
+
+app.post('/memory', (req, res) => { 
+    res.redirect('languages/index');
 });
  
 async function getResponse(userMessage) {
@@ -152,8 +161,8 @@ async function getResponse(userMessage) {
     const response = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: memory,
-        max_tokens: 100
-    });
+        max_tokens: 50
+    });  
 
     const answer = response.choices[0].message.content;
     console.log(answer, '+++');   
