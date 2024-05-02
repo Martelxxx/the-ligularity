@@ -19,7 +19,7 @@
  body {
     font-family: 'gloria hallelujah', cursive;
     color: #333;
-    margin: 0;
+    margin: 10px;
     padding: 0;
 }
 
@@ -105,6 +105,13 @@
     text-align: center;
 }
 
+.confirm {
+    margin: 10px;
+    text-align: left;
+    text-indent: 0;
+
+}
+
 footer {
     background-color: #343a40;
     color: white;
@@ -141,13 +148,16 @@ nav {
 
 <body>
 
-    <h2>English to <%= name %></h2>
-    <form action="/languages/<%=name%>/translator" method="POST">
-        <textarea id="input-text" name="complete" id="complete" placeholder="Enter text..."></textarea>
-        <button id="translate-button">Translate</button>
+    <h2>English to </h2>
+    <form action="/memory" method="POST">
+        <textarea rows="6" id="input-text" name="id" id="confirm" placeholder="Enter text..."> 
+        
+        Create a language called <%= language.name %> using <%= language.agent %> as my agent. The language will be used for <%= language.purpose %> about a(n) <%= language.context %>. It will use  <%= language.consonant %> consonants and <%= language.vowel %> vowels based on <%= language.grammar %>
+        
+    </textarea>
+    <button id="translate-button">Confirm</button>
+        
 </form>
-        <textarea id="output-text" placeholder="Translation..." readonly><%= lastResponse %></textarea>
-
       
 
 

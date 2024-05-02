@@ -59,11 +59,22 @@ app.get('/languages/new', async (req, res) => {
     res.render('languages/new.ejs', { agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar, languages: languages});
 });
 
-app.post('/languages', async (req, res) => {
-    console.log(req.body);  
-    await Language.create(req.body);
-    res.redirect('/languages/new');
+app.get('/confirmation', (req, res) => {
+    res.render('languages/confirmation.ejs');
 });
+
+app.post('/languages', async (req, res) => {
+    
+    const languages = await Language.create(req.body);
+    res.render('languages/confirmation.ejs', { 
+        language: languages });
+});
+
+app.post('/memory', (req, res) => {
+    memory.push(req.body);
+    localStorage.setItem('memory', JSON.stringify(memory));
+    res.redirect('/');
+})
 
 app.get('/languages/index', async (req, res) => {
     const languages = await Language.find();
@@ -130,22 +141,11 @@ let memory = data ? JSON.parse(data) : [];
 
 app.post('/languages/:languageName/translator', async (req, res) => {
     const languageName = req.params.languageName;
-
     const userMessage = req.body.englishTo;
     const response = await getResponse(userMessage);
-    res.render('languages/complete.ejs', {lastResponse: response.choices[0].message.content, name: languageName});
+    res.render('languages/complete.ejs', {lastResponse: response.choices[0].message.content, name: languageName}); 
 });
-
-app.post('/languages/:languageName/translated', async (req, res) => {
-    // Extract the language name from the route parameters
-    const languageName = req.params.languageName;
-
-    // TODO: Process the POST request, e.g. update the language in the database
-
-    // Send a response
-    res.send('translated post orkd');
-});
-
+ 
 async function getResponse(userMessage) {
     memory.push({role: 'user', content: userMessage});
 
@@ -165,13 +165,6 @@ async function getResponse(userMessage) {
     return response;
 
 }
-
-app.get('/languages/:languageName/translator', async (req, res) => {
-    const lastResponse = memory.length > 0 ? memory[memory.length - 1].content : '';
-    res.render('complete', {lastResponse: lastResponse || 'No response yet!'});
-
-console.log('lastResponse', '+++ABC');
-});
 
 console.log('tutto bene');
 
