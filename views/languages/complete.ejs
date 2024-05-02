@@ -142,11 +142,14 @@ nav {
 <body>
 
     <h2>English to <%= name %></h2>
-<form action="/languages/<%=name%>/translator" method="POST">
+    <form action="/languages/<%=name%>/translator" method="POST">
         <textarea id="input-text" name="englishTo" id="englishTo" placeholder="Enter text..."></textarea>
         <button id="translate-button">Translate</button>
 </form>
-        <textarea id="output-text" placeholder="Translation..." readonly></textarea>
+        <textarea id="output-text" placeholder="Translation..." readonly><%= lastResponse %></textarea>
+
+      
+
 
     <footer>
         © 2024 The Lingularity from Martelligence. All rights reserved.

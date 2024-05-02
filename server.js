@@ -6,8 +6,16 @@ dotenv.config();
 
 const mongoose = require('mongoose');
 
+const OpenAI = require('openai');
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
+
+
 const express = require('express');
 const app = express();
+
+const LocalStorage = require('node-localstorage').LocalStorage;
+const localStorage = new LocalStorage('./scratch');
+
 
 const methodOverride = require('method-override');
 
@@ -26,6 +34,8 @@ const context = require('./Data Arrays/context.js');
 const consonants = require('./Data Arrays/consonants.js');
 const vowels = require('./Data Arrays/vowels.js');
 const grammar = require('./Data Arrays/grammar.js');
+const { log } = require('console');
+const { name } = require('ejs');
 
 
 app.use(express.urlencoded({ extended: false }));
@@ -112,6 +122,60 @@ app.get('/api/grammar', (req, res) => {
 });
 
 
-app.listen(3226, () => {
-  console.log('server 3032 started');
+
+// =========================================
+
+let data = localStorage.getItem('memory');
+let memory = data ? JSON.parse(data) : [];
+
+app.post('/languages/:languageName/translator', async (req, res) => {
+    const languageName = req.params.languageName;
+
+    const userMessage = req.body.englishTo;
+    const response = await getResponse(userMessage);
+    res.render('languages/complete.ejs', {lastResponse: response.choices[0].message.content, name: languageName});
 });
+
+app.post('/languages/:languageName/translated', async (req, res) => {
+    // Extract the language name from the route parameters
+    const languageName = req.params.languageName;
+
+    // TODO: Process the POST request, e.g. update the language in the database
+
+    // Send a response
+    res.send('translated post orkd');
+});
+
+async function getResponse(userMessage) {
+    memory.push({role: 'user', content: userMessage});
+
+    const response = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: memory,
+        max_tokens: 100
+    });
+
+    const answer = response.choices[0].message.content;
+    console.log(answer, '+++');   
+ 
+    memory.push({role: 'assistant', content: answer});
+    localStorage.setItem('memory', JSON.stringify(memory));
+
+
+    return response;
+
+}
+
+app.get('/languages/:languageName/translator', async (req, res) => {
+    const lastResponse = memory.length > 0 ? memory[memory.length - 1].content : '';
+    res.render('complete', {lastResponse: lastResponse || 'No response yet!'});
+
+console.log('lastResponse', '+++ABC');
+});
+
+console.log('tutto bene');
+
+app.listen(3226, () => {
+    console.log('server 3032 started');
+  });  
+
