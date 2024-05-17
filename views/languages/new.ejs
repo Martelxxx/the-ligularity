@@ -86,6 +86,8 @@ label {
 .top-middle {
     grid-column: 2 / 3; /* Middle column */
     grid-row: 1 / 2; /* Top row */
+    background-image: url('/assets/bg3.png');
+    background-size: cover;
     /* Other styles... */
 }
 
@@ -295,33 +297,17 @@ footer {
 
         <div class="top-middle"> <!-- Top middle grid -->
             <!-- Content for top middle grid -->
-            <p>Translator</p>
-            <form action="/languages" method="POST">
-            <p>Translate from:
-            <select id="languages">
-                    <% languages.forEach(function(language) { %>
-                        <option value="<%= language.name %>"><%= language.name %></option>
-                    <% }); %>
-                </select>
-                to English:</p>
-                <hr>
-                <textarea type="text" id="translate" placeholder="Enter text to translate"></textarea>
-                <button id="translate-btn">Translate</button>
-            <hr>
-            <p>Translation:</p>
-            <hr>
-            <textarea id="translation" placeholder="Translation will appear here" readonly></textarea>
-            </form>
+            
             </div>
 
         <div class="bottom-middle"> <!-- Bottom middle grid -->
             <!-- Content for bottom middle grid -->
-            <p>Upgrade for full content!</p>
+            <p></p>
         </div>
 <div class=""sidebar-container> <!-- Sidebar container -->
         <div class="sidebar-right"> <!-- Right sidebar -->
             <!-- Content for right sidebar -->
-            <p>Upgrade for full content!</p>
+            <p></p>
         </div>
         </div>
     </div>

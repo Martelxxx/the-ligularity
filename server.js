@@ -56,31 +56,23 @@ app.get('/', async (req, res) => {
 
 app.get('/languages/new', async (req, res) => {
     const languages = await Language.find();
-    
     res.render('languages/new.ejs', { agents: agents, purposeful: purposeful, context: context, consonants: consonants, vowels: vowels, grammar: grammar, languages: languages});
 });
 
 app.get('/confirmation', (req, res) => {
-    res.render('languages/confirmation.ejs');
+    res.render('languages/confirmation.ejs', { grammar: grammar });
 });
 
 app.post('/languages', async (req, res) => {
-    
     const languages = await Language.create(req.body);
     res.render('languages/confirmation.ejs', { 
-        language: languages });
+        language: languages, grammar: grammar });
 }); 
 
-// app.post('/memory', (req, res) => {
-//     memory.push(req.body);
-//     localStorage.setItem('memory', JSON.stringify(memory));
-//     res.redirect('/');
-// })
 
 app.get('/languages/index', async (req, res) => {
     const languages = await Language.find();
-
-    res.render('languages/index.ejs', { languages });
+    res.render('languages/index.ejs', { languages, grammar });
 });
 
 app.delete('/languages/:languageName', async (req, res) => {
@@ -99,9 +91,7 @@ app.get('/languages/:languageName/translator', async (req, res) => {
     const languageName = req.params.languageName;
     const foundLanguage = await Language.findOne({ name: languageName });
     const userMessage = req.body.englishTo;
-    const response = await getResponse('');
-
-    
+    const response = await getResponse(''); 
     res.render("languages/translator.ejs", {lastResponse: response.choices[0].message.content, name: languageName});
 });
 
@@ -137,8 +127,6 @@ app.get('/api/grammar', (req, res) => {
     res.json(grammar );
 });
 
-
-
 // =========================================
 
 let data = localStorage.getItem('memory');
@@ -148,7 +136,7 @@ app.post('/languages/:languageName/translator', async (req, res) => {
     const languageName = req.params.languageName;
     const userMessage = req.body.englishTo;
     const response = await getResponse(userMessage);
-    res.render('languages/translator.ejs', {lastResponse: response.choices[0].message.content, name: languageName}); 
+    res.render('languages/translator.ejs', {lastResponse: response.choices[0].message.content, name: languageName, grammar: grammar}); 
 });
 
 app.post('/memory', (req, res) => { 
@@ -161,7 +149,7 @@ async function getResponse(userMessage) {
     const response = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
         messages: memory,
-        max_tokens: 50
+        max_tokens: 250
     });  
 
     const answer = response.choices[0].message.content;
